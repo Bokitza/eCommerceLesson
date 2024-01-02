@@ -1,38 +1,32 @@
-//classic way!
+const url = "https://fakestoreapi.com/products";
+const productsDiv = document.getElementById("products-container");
+const spinner = document.getElementById("spinner");
+async function getProducts() {
+  console.log("fetching!");
+  const res = await fetch(url);
+  console.log("getting json!");
+  const data = await res.json();
 
-// fetch("https://swapi.dev/api/people/")
-//   .then((data) => {
-//     console.log("success! bringing json...");
-//     data.json().then((data) => {
-//       const results = data.results;
-//       results.forEach((item) => {
-//         const container = document.getElementById("todo-container");
-//         container.innerHTML += `<div>
-//                                     <h2>name: ${item.name}</h2>
-//                                     <h3>Eye Color: ${item.eye_color} </h3>
-//                                     <h3>Height: ${item.height}</h3>
-//                                 </div>`;
-//       });
-//     });
-//   })
-//   .catch((error) => {
-//     console.log("error! something is not right");
-//   });
-
-//modern way!
-
-async function getStarwarsPeople() {
-  const response = await fetch("https://swapi.dev/api/people/");
-  const json = await response.json();
-  const resultsArray = json.results;
-  const container = document.getElementById("todo-container");
-  resultsArray.forEach((item) => {
-    container.innerHTML += `<div>
-                            <h2>name: ${item.name}</h2>
-                            <h3>Eye Color: ${item.eye_color} </h3>
-                            <h3>Height: ${item.height}</h3>
-                            </div>`;
+  console.log("rendering item on screen...");
+  data.forEach((product) => {
+    productsDiv.innerHTML += `<div class="card" >
+                                    <h3>${product.title}</h3>
+                                    <h4>${product.price}</h4>
+                                    <img width="80px" src="${product.image}" />
+                             </div>`;
   });
+
+  hideSpinner();
 }
 
-getStarwarsPeople();
+console.log("getting products from server...");
+getProducts();
+console.log("finished getting products");
+const number = 2;
+const otherNumber = 10;
+console.log(number + otherNumber);
+console.log("done!");
+
+function hideSpinner() {
+  spinner.style.display = "none";
+}
